@@ -1,7 +1,5 @@
 using Cards;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using Cards.AttributeControllers.Interfaces;
 using UnityEngine;
 
 public class Card : MonoBehaviour
