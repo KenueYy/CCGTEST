@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using Utillites.Image;
 
-namespace Card.Art {
+namespace Cards.Art {
     public class ImageLoader : MonoBehaviour {
         [SerializeField]
         private Image _image;
