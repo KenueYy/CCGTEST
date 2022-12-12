@@ -8,7 +8,7 @@ namespace Cards.AttributeControllers {
 
         public event Action<int> onValueChange;
 
-        private int _maxHealth;
+        private int _baseHealth;
         private int _currentHealth;
 
         private IMutable _healthUI;
@@ -18,6 +18,7 @@ namespace Cards.AttributeControllers {
         public void Initialize(CardObject card) {
             _healthUI = GetComponentInChildren<HealthUI>();
             onValueChange += _healthUI.SetValue;
+            _baseHealth = card.Health;
 
             Increase(card.Health);
         }
