@@ -1,5 +1,5 @@
 namespace Cards.AttributeControllers.Interfaces {
-    interface IMutable {
-        void SetValue(int value);
+    interface IMutable<T> {
+        void SetValue(T value);
     }
 }

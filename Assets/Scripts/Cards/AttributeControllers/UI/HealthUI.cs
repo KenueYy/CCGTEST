@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Cards.AttributeControllers.UI {
 
-    public class HealthUI : MonoBehaviour, IMutable {
+    public class HealthUI : MonoBehaviour, IMutable<int> {
 
         [SerializeField]
         private Text health;

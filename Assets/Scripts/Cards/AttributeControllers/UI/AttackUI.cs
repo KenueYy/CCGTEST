@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Cards.AttributeControllers.UI {
 
-    public class AttackUI : MonoBehaviour, IMutable {
+    public class AttackUI : MonoBehaviour, IMutable<int> {
 
         [SerializeField]
         private Text attack;
