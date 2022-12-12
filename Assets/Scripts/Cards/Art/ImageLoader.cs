@@ -6,6 +6,7 @@ using Utillites.Image;
 
 namespace Cards.Art {
     public class ImageLoader : MonoBehaviour {
+
         [SerializeField]
         private Image _image;
 
