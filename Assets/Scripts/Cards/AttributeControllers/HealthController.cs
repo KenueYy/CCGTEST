@@ -4,16 +4,16 @@ using System;
 using UnityEngine;
 
 namespace Cards.AttributeControllers {
-    public class HealthController : MonoBehaviour, IAttributeController {
+    public class HealthController : MonoBehaviour, IAttributeController, IAttributeInitializer {
 
         public event Action<int> onValueChange;
 
         private int _baseHealth;
         private int _currentHealth;
 
-        private IMutable _healthUI;
+        private IMutable<int> _healthUI;
 
-        #region IAttributeController
+        #region IAttributeInitializer
 
         public void Initialize(CardObject card) {
 
@@ -22,6 +22,10 @@ namespace Cards.AttributeControllers {
             _baseHealth = card.Health;
             Increase(card.Health);
         }
+
+        #endregion
+
+        #region IAttributeController
 
         public void Increase(int value) {
             _currentHealth += value;

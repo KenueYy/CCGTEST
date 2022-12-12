@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace Cards.AttributeControllers {
 
-    public class AttackController : MonoBehaviour, IAttributeController {
+    public class AttackController : MonoBehaviour, IAttributeController, IAttributeInitializer {
 
         public event Action<int> onValueChange;
 
         private int _baseAttack;
         private int _currentAttack;
 
-        private IMutable _attackUI;
+        private IMutable<int> _attackUI;
 
-        #region IAttributeController
+        #region IAttributeInitializer
 
         public void Initialize(CardObject card) {
 
@@ -24,6 +24,9 @@ namespace Cards.AttributeControllers {
             _baseAttack = card.Attack;
 
         }
+        #endregion
+
+        #region IAttributeController
 
         public void Decrease(int value) {
 

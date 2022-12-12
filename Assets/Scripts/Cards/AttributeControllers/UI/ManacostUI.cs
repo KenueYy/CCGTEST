@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Cards.AttributeControllers.UI {
 
-    public class ManacostUI : MonoBehaviour, IMutable {
+    public class ManacostUI : MonoBehaviour, IMutable<int> {
 
         [SerializeField]
         private Text manacost;
