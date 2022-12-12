@@ -8,7 +8,7 @@ namespace Cards.AttributeControllers {
 
         public event Action<int> onValueChange;
 
-        private int _maxHealth;
+        private int _baseHealth;
         private int _currentHealth;
 
         private IMutable _healthUI;
@@ -19,7 +19,7 @@ namespace Cards.AttributeControllers {
 
             Subscribe();
 
-            _maxHealth = card.Health;
+            _baseHealth = card.Health;
             Increase(card.Health);
         }
 
