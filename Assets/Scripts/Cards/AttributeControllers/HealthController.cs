@@ -15,11 +15,11 @@ namespace Cards.AttributeControllers {
 
         #region IAttributeController
 
-        public void Initialize(int health) {
+        public void Initialize(CardObject card) {
             _healthUI = GetComponentInChildren<HealthUI>();
             onValueChange += _healthUI.SetValue;
 
-            Increase(health);
+            Increase(card.Health);
         }
 
         public void Increase(int value) {

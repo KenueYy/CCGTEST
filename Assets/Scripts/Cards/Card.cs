@@ -1,6 +1,7 @@
 using Cards;
 using Cards.AttributeControllers.Interfaces;
 using UnityEngine;
+using System.Linq;
 
 public class Card : MonoBehaviour
 {
@@ -18,6 +19,6 @@ public class Card : MonoBehaviour
             Health = 7
         };
 
-        GetComponentInChildren<IAttributeController>().Initialize(cardObject.Health);
+        GetComponentsInChildren<IAttributeController>().ToList().ForEach(x => x.Initialize(cardObject));
     }
 }
