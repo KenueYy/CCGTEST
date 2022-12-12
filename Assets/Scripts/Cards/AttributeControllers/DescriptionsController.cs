@@ -1,38 +1,40 @@
-using Cards;
 using Cards.AttributeControllers.Enums;
 using Cards.AttributeControllers.Interfaces;
 using System;
 using UnityEngine;
 using Utillites.Interfaces;
 
-public class DescriptionsController : MonoBehaviour, IAttributeInitializer, ISilence {
-    public event Action<bool> onSilence;
+namespace Cards.AttributeControllers {
+    public class DescriptionsController : MonoBehaviour, IAttributeInitializer, ISilence {
 
-    private IMutable<string> _descriptionText;
-    private ILabilized _descriptionView;
+        public event Action<bool> onSilence;
 
-    public void Initialize(CardObject card) {
-        Subscribe();
-        _descriptionText.SetValue(card.Description);
-    }
+        private IMutable<string> _descriptionText;
+        private ILabilized _descriptionView;
 
-    [ContextMenu("Silence")]
-    public void Silence() {
-        _descriptionText.SetValue(DiscriptionStatus.Silenced.ToString());
-    }
+        public void Initialize(CardObject card) {
+            Subscribe();
+            _descriptionText.SetValue(card.Description);
+        }
 
-    private void Subscribe() {
-        _descriptionText = GetComponentInChildren<DescriptionsUI>();
+        [ContextMenu("Silence")]
+        public void Silence() {
+            _descriptionText.SetValue(DiscriptionStatus.Silenced.ToString());
+        }
 
-        _descriptionView = GetComponentInChildren<ILabilized>();
-        onSilence += _descriptionView.SetActive;
-    }
+        private void Subscribe() {
+            _descriptionText = GetComponentInChildren<DescriptionsUI>();
 
-    private void Unscribe() {
-        onSilence -= _descriptionView.SetActive;
-    }
+            _descriptionView = GetComponentInChildren<ILabilized>();
+            onSilence += _descriptionView.SetActive;
+        }
 
-    private void OnDestroy() {
-        Unscribe();
+        private void Unscribe() {
+            onSilence -= _descriptionView.SetActive;
+        }
+
+        private void OnDestroy() {
+            Unscribe();
+        }
     }
 }
