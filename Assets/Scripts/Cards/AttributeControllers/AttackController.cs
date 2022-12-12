@@ -14,10 +14,11 @@ namespace Cards.AttributeControllers {
 
         private IMutable _attackUI;
 
+        #region IAttributeController
+
         public void Initialize(CardObject card) {
 
-            _attackUI = GetComponentInChildren<AttackUI>();
-            onValueChange += _attackUI.SetValue;
+            Subscribe();
 
             Increase(card.Attack);
             _baseAttack = card.Attack;
@@ -41,6 +42,24 @@ namespace Cards.AttributeControllers {
             onValueChange?.Invoke(_currentAttack);
 
         }
+        #endregion
 
+
+        private void Subscribe() {
+
+            _attackUI = GetComponentInChildren<AttackUI>();
+            onValueChange += _attackUI.SetValue;
+
+        }
+
+        private void Unsubscribe() {
+
+            onValueChange -= _attackUI.SetValue;
+
+        }
+
+        private void OnDestroy() {
+            Unsubscribe();
+        }
     }
 }
