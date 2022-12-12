@@ -2,6 +2,7 @@ using Cards;
 using Cards.AttributeControllers.Interfaces;
 using UnityEngine;
 using System.Linq;
+using Utillites;
 
 public class Card : MonoBehaviour
 {
