@@ -16,10 +16,10 @@ namespace Cards.AttributeControllers {
         #region IAttributeController
 
         public void Initialize(CardObject card) {
-            _healthUI = GetComponentInChildren<HealthUI>();
-            onValueChange += _healthUI.SetValue;
-            _baseHealth = card.Health;
 
+            Subscribe();
+
+            _baseHealth = card.Health;
             Increase(card.Health);
         }
 
@@ -31,7 +31,7 @@ namespace Cards.AttributeControllers {
         public void Decrease(int value) {
 
             if (_currentHealth - value <= 0) {
-                Destroy(gameObject);
+                Destroy(GetComponentInParent<Card>().gameObject);
                 return;
             }
 
@@ -41,8 +41,22 @@ namespace Cards.AttributeControllers {
 
         #endregion
 
-        private void OnDestroy() {
+
+        private void Subscribe() {
+
+            _healthUI = GetComponentInChildren<HealthUI>();
+            onValueChange += _healthUI.SetValue;
+
+        }
+
+        private void Unsubscribe() {
+
             onValueChange -= _healthUI.SetValue;
+
+        }
+
+        private void OnDestroy() {
+            Unsubscribe();
         }
 
     }
