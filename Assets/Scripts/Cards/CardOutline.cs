@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using Utillites.Interfaces;
 
-public class CardOutline : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class CardOutline : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
 {
     //К сожалению я пока не могу в шедеры
     private ILabilized _outline;
@@ -15,13 +15,11 @@ public class CardOutline : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         _outline.SetActive(false);
     }
 
-    public void OnPointerDown(PointerEventData eventData) {
-        _outline.SetActive(true);
-    }
-
-    public void OnPointerUp(PointerEventData eventData) {
+    public void OnPointerExit(PointerEventData eventData) {
         _outline.SetActive(false);
     }
-    
 
+    public void OnPointerEnter(PointerEventData eventData) {
+        _outline.SetActive(true);
+    }
 }

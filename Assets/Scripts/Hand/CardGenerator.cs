@@ -1,7 +1,7 @@
 ﻿using Cards;
 using UnityEngine;
 
-namespace Utillites {
+namespace Hand {
     public static class CardGenerator {
         public static CardObject Generate() {
             CardObject card = new CardObject() {
