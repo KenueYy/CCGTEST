@@ -2,6 +2,7 @@ using Cards.AttributeControllers.Interfaces;
 using UnityEngine;
 using System.Linq;
 using Hand;
+using Utillites.ObjectPooller;
 
 namespace Cards {
 
@@ -13,5 +14,6 @@ namespace Cards {
             CardObject cardObject = CardGenerator.Generate();
             GetComponentsInChildren<IAttributeInitializer>().ToList().ForEach(x => x.Initialize(cardObject));
         }
+        
     }
 }
