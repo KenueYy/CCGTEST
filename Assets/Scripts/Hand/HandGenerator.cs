@@ -1,10 +1,10 @@
-using Cards;
+﻿using Cards;
 using Cards.AttributeControllers.Interfaces;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Utillites;
 using Utillites.ObjectPooller;
 
 namespace Hand {
@@ -21,26 +21,8 @@ namespace Hand {
         [SerializeField]
         private Transform cardsContainer;
 
-        private async void Awake() {
-
-            List<Card> loadCards = new List<Card>();
-            for (int i = 0; i < 5; i++) {
-                var cardObject = Spawner.instance.SpawnObject(poolObject);
-                var card = cardObject.GetComponent<Card>();
-                await Load(1000);
-                card.Initialize();
-                card.transform.parent = cardsContainer;
-                loadCards.Add(card);
-            }
-            await Load(1500);
-            loadCards.ForEach(x => {
-                AddCard(x);
-            });
-
-        }
-
-        private async Task Load(int time) {
-            await Task.Delay(time);
+        private void Awake() {
+            GiveCards();
         }
 
         public List<Card> GetCardList() {
@@ -64,5 +46,31 @@ namespace Hand {
                 onCardListChanged -= x.GetComponentInChildren<ICardTransform>().SetPoint;
             });
         }
+
+        private async void GiveCards() {
+            Spawner.instance.PreparationPool(poolObject);
+            await Load(3500);
+
+            List<Card> loadCards = new List<Card>();
+            for (int i = 0; i < Randomizer.RandomIntValue(4); i++) {
+                var cardObject = Spawner.instance.SpawnObject(poolObject);
+                var card = cardObject.GetComponent<Card>();
+                await Load(700);
+                card.Initialize();
+                card.transform.parent = cardsContainer;
+                loadCards.Add(card);
+            }
+
+            await Load(1500);
+            loadCards.ForEach(x => {
+                AddCard(x);
+            });
+        }
+
+        // Я знаю что юнити плохо работает с C# тасками, но подключать UniTask ради одного метода я не стал, как и корутину дожидающуюся выполнения другой корутины
+        private async Task Load(int time) {
+            await Task.Delay(time);
+        }
+       
     }
 }

@@ -7,8 +7,6 @@ namespace Utillites.ObjectPooller {
 
         [SerializeField] 
         private Transform ObjectPoolContainer;
-        [SerializeField]
-        private PoolObject cardPool;
 
         public static Spawner instance;
 
@@ -16,7 +14,6 @@ namespace Utillites.ObjectPooller {
 
         private void Awake() {
             instance = this;
-            PreparationPool(cardPool);
         }
 
         public void PreparationPool(PoolObject PoolData) {
