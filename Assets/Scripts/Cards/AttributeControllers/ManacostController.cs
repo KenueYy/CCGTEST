@@ -13,12 +13,25 @@ namespace Cards.AttributeControllers {
         private int _currentManacost;
 
         private IMutable<int> _manacostUI;
+
+        public bool isInitialized {
+            get {
+                return _isInitialized;
+            }
+            set {
+                _isInitialized = value;
+            }
+        }
+
+        private bool _isInitialized = false;
+
         #region IAttributeInitializer
         public void Initialize(CardObject card) {
             Subscribe();
             _baseManacost = card.Manacost;
 
             Increase(card.Manacost);
+            isInitialized = true;
         }
         #endregion
 
@@ -49,6 +62,10 @@ namespace Cards.AttributeControllers {
         }
 
         private void Unsubscribe() {
+
+            if (!isInitialized) {
+                return;
+            }
 
             onValueChange -= _manacostUI.SetValue;
 

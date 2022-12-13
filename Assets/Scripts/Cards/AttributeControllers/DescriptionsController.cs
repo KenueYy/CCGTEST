@@ -12,9 +12,21 @@ namespace Cards.AttributeControllers {
         private IMutable<string> _descriptionText;
         private ILabilized _descriptionView;
 
+        public bool isInitialized {
+            get {
+                return _isInitialized;
+            }
+            set {
+                _isInitialized = value;
+            }
+        }
+
+        private bool _isInitialized = false;
+
         public void Initialize(CardObject card) {
             Subscribe();
             _descriptionText.SetValue(card.Description);
+            isInitialized = true;
         }
 
         [ContextMenu("Silence")]
@@ -30,6 +42,11 @@ namespace Cards.AttributeControllers {
         }
 
         private void Unscribe() {
+
+            if (!isInitialized) {
+                return;
+            }
+
             onSilence -= _descriptionView.SetActive;
         }
 

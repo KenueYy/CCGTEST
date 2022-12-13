@@ -21,12 +21,24 @@ namespace Cards.AttributeControllers {
         private int _index;
         private Card _parent;
 
+        public bool isInitialized {
+            get {
+                return _isInitialized;
+            }
+            set {
+                _isInitialized = value;
+            }
+        }
+
+        private bool _isInitialized = false;
+
         #region IAttributeInitializer
 
         public void Initialize(CardObject card) {
             Connections();
             _index = _handGenerator.GetCardList().FindIndex(x => x == _parent);
             SetPoint();
+            isInitialized = true;
         }
 
         #endregion
