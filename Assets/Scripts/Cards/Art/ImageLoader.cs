@@ -1,3 +1,4 @@
+using Cards.AttributeControllers.Interfaces;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -5,18 +6,29 @@ using UnityEngine.UI;
 using Utillites.Image;
 
 namespace Cards.Art {
-    public class ImageLoader : MonoBehaviour {
+    public class ImageLoader : MonoBehaviour, IAttributeInitializer {
 
         [SerializeField]
         private Image _image;
 
-        private void Awake() {
+        public bool isInitialized {
+            get {
+                return _isInitialized;
+            }
+            set {
+                _isInitialized = value;
+            }
+        }
 
+        private bool _isInitialized = false;
+
+        public void Initialize(CardObject card) {
             if (_image == null) {
                 _image = GetComponentInChildren<Image>();
             }
 
-            StartCoroutine(DownloadImage("https://picsum.photos/1800/900"));
+            StartCoroutine(DownloadImage($"https://picsum.photos/{card.ImageWidth}/{card.ImageHeight}"));
+            isInitialized = true;
         }
 
         private IEnumerator DownloadImage(string url) {

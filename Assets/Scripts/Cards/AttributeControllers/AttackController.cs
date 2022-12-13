@@ -14,6 +14,17 @@ namespace Cards.AttributeControllers {
 
         private IMutable<int> _attackUI;
 
+        public bool isInitialized {
+            get {
+                return _isInitialized;
+            }
+            set {
+                _isInitialized = value;
+            }
+        }
+
+        private bool _isInitialized = false;
+
         #region IAttributeInitializer
 
         public void Initialize(CardObject card) {
@@ -22,6 +33,7 @@ namespace Cards.AttributeControllers {
 
             Increase(card.Attack);
             _baseAttack = card.Attack;
+            isInitialized = true;
 
         }
         #endregion
@@ -57,8 +69,11 @@ namespace Cards.AttributeControllers {
 
         private void Unsubscribe() {
 
-            onValueChange -= _attackUI.SetValue;
+            if (!isInitialized) {
+                return;
+            }
 
+            onValueChange -= _attackUI.SetValue;
         }
 
         private void OnDestroy() {

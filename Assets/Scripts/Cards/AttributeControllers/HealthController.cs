@@ -12,6 +12,16 @@ namespace Cards.AttributeControllers {
         private int _currentHealth;
 
         private IMutable<int> _healthUI;
+        public bool isInitialized {
+            get {
+                return _isInitialized;
+            }
+            set {
+                _isInitialized = value;
+            }
+        }
+
+        private bool _isInitialized = false;
 
         #region IAttributeInitializer
 
@@ -21,6 +31,7 @@ namespace Cards.AttributeControllers {
 
             _baseHealth = card.Health;
             Increase(card.Health);
+            isInitialized = true;
         }
 
         #endregion
@@ -54,6 +65,10 @@ namespace Cards.AttributeControllers {
         }
 
         private void Unsubscribe() {
+
+            if (!isInitialized) {
+                return;
+            }
 
             onValueChange -= _healthUI.SetValue;
 
