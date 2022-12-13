@@ -1,5 +1,6 @@
 using Cards.AttributeControllers.Interfaces;
 using Hand;
+using Hand.Interfaces;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,7 @@ namespace Cards.AttributeControllers {
         [SerializeField]
         private float speed;
 
-        private HandGenerator _handGenerator;
+        private IHand _hand;
         private CardCurve _cardCurve;
 
         private Vector3 _cardPosition;
@@ -36,7 +37,6 @@ namespace Cards.AttributeControllers {
 
         public void Initialize(CardObject card) {
             Connections();
-            _index = _handGenerator.GetCardList().FindIndex(x => x == _parent);
             SetPoint();
             isInitialized = true;
         }
@@ -46,13 +46,13 @@ namespace Cards.AttributeControllers {
         #region Handlers
         public void OnPointerDown(PointerEventData eventData) {
             StopCoroutine(nameof(GoBack));
-            _handGenerator.RemoveCard(_index);
+            _hand.RemoveCard(_parent);
             _startPosition = transform.position;
             _difference = _startPosition - MousePosition.GetPointerPositionOnWorldPoint(eventData.position);
         }
 
         public void OnPointerUp(PointerEventData eventData) {
-            _handGenerator.AddCard(_parent);
+            _hand.AddCard(_parent);
             _startPosition = transform.position;
         }
 
@@ -72,14 +72,14 @@ namespace Cards.AttributeControllers {
         #endregion
 
         public void SetPoint() {
-            _index = _handGenerator.GetCardList().FindIndex(x => x == _parent);
+            _index = _hand.GetCardList().FindIndex(x => x == _parent);
             _cardPosition = _cardCurve.GetPoint(_index);
             StartCoroutine(nameof(GoBack));
         }
 
         private void Connections() {
             _parent = GetComponentInParent<Card>();
-            _handGenerator = FindObjectOfType<HandGenerator>();
+            _hand = FindObjectOfType<HandCards>();
             _cardCurve = FindObjectOfType<CardCurve>();
         }
 

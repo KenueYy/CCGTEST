@@ -1,7 +1,10 @@
 using Cards.AttributeControllers.Interfaces;
 using Cards.AttributeControllers.UI;
+using Hand;
+using Hand.Interfaces;
 using System;
 using UnityEngine;
+using Utillites.ObjectPooller;
 
 namespace Cards.AttributeControllers {
     public class HealthController : MonoBehaviour, IAttributeController, IAttributeInitializer {
@@ -12,6 +15,9 @@ namespace Cards.AttributeControllers {
         private int _currentHealth;
 
         private IMutable<int> _healthUI;
+        private Card _parent;
+        private HandGenerator _handGenerator;
+        private IHand _hand;
         public bool isInitialized {
             get {
                 return _isInitialized;
@@ -39,6 +45,12 @@ namespace Cards.AttributeControllers {
         #region IAttributeController
 
         public void Increase(int value) {
+
+            if (_currentHealth + value <= 0) {
+                Remove();
+                return;
+            }
+
             _currentHealth += value;
             onValueChange?.Invoke(_currentHealth);
         }
@@ -46,7 +58,7 @@ namespace Cards.AttributeControllers {
         public void Decrease(int value) {
 
             if (_currentHealth - value <= 0) {
-                Destroy(GetComponentInParent<Card>().gameObject);
+                Remove();
                 return;
             }
 
@@ -55,12 +67,18 @@ namespace Cards.AttributeControllers {
         }
 
         #endregion
-
+        public void Remove() {
+            _hand.RemoveCard(_parent);
+            Spawner.instance.DispawnObject(_parent.gameObject, _handGenerator.GetPoolObject());
+        }
 
         private void Subscribe() {
 
             _healthUI = GetComponentInChildren<HealthUI>();
             onValueChange += _healthUI.SetValue;
+            _parent = GetComponentInParent<Card>();
+            _handGenerator = FindObjectOfType<HandGenerator>();
+            _hand = FindObjectOfType<HandCards>();
 
         }
 

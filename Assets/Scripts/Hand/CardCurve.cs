@@ -1,10 +1,11 @@
+using Hand.Interfaces;
 using UnityEngine;
 using Utillites;
 
 namespace Hand {
 
     public class CardCurve : MonoBehaviour {
-        private HandGenerator _handGenerator;
+        private IHand _hand;
 
         [SerializeField]
         public Transform P0;
@@ -21,11 +22,12 @@ namespace Hand {
         private int _cardsCount;
 
         private void Awake() {
-            _handGenerator = FindObjectOfType<HandGenerator>();
+            _hand = FindObjectOfType<HandCards>();
         }
 
         public void CardsCountUpdate() {
-            _cardsCount = _handGenerator.GetCardList().Count;
+            _cardsCount = _hand.GetCardList().Count;
+            transform.localScale = new Vector3((float)_cardsCount/10,1,1);
         }
 
         public Vector2 GetPoint(int index) {
