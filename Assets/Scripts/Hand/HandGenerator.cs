@@ -25,7 +25,7 @@ namespace Hand {
             await Load(3500);
 
             List<Card> loadCards = new List<Card>();
-            for (int i = 0; i < Randomizer.RandomIntValue(1,10); i++) {
+            for (int i = 0; i < Randomizer.RandomIntValue(4,6); i++) {
                 var cardObject = Spawner.instance.SpawnObject(poolObject);
                 var card = cardObject.GetComponent<Card>();
 

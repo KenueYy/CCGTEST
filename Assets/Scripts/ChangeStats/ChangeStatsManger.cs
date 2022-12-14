@@ -29,7 +29,7 @@ namespace ChangeStats {
                 ChangeStats(controllers);
                 await Load(500);
             }
-            await Load(5000);
+            await Load(3000);
             cards = _hand.GetCardList();
             for (int i = cards.Count - 1; i >= 0; i--) {
                 var controllers = cards[i].GetComponentsInChildren<IAttributeController>();
